@@ -2,13 +2,15 @@ import { DataSource } from "typeorm"
 import { Product } from "../models/Product.js"
 import { User } from "../models/User.js"
 import { Cart } from "../models/Cart.js"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const AppDataSource = new DataSource({
     type: "mongodb",
-    host: "localhost",
-    port: 27017,
-    database: "test",
+    url: process.env.MONGODB_URI!,
     entities: [Product, User, Cart],
+    synchronize: true,
 })
 
 let initPromise: Promise<DataSource> | null = null
